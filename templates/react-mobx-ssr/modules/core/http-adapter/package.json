@@ -1,0 +1,24 @@
+{
+  "name": "http-adapter",
+  "version": "1.0.0",
+  "author": "sam",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/deep-extend": "^0.4.31",
+    "@types/jest": "^23.3.12",
+    "@types/lodash": "^4.14.120",
+    "@types/node": "^10.12.18",
+    "@types/request": "^2.48.1",
+    "browser-cookies": "^1.2.0",
+    "deep-extend": "^0.6.0",
+    "jest": "^23.6.0",
+    "lodash": "^4.17.11",
+    "request": "^2.88.0",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.4",
+    "uuidv4": "^3.0.1"
+  }
+}

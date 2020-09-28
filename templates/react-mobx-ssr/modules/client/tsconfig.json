@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./dist",
+    "module": "esnext",
+    "allowJs": true,
+    "target": "es5",
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "es7"
+    ],
+    "experimentalDecorators": true
+  },
+  "include": [
+    "./spa-modules/**/*",
+    "./typings/**/*"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./dist"
+  ]
+}

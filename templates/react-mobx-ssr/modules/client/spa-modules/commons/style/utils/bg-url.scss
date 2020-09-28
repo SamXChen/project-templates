@@ -1,0 +1,19 @@
+//100%
+@mixin bg-url($url1, $url2) {
+  [data-dpr='1'] & {
+    background-image: url($url1);
+    background-position: center center;
+    background-size: 100% 100%;
+  }
+  [data-dpr='2'] & {
+    background-image: url($url1);
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+
+  [data-dpr='3'] & {
+    background-image: url($url2);
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+}

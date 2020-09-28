@@ -1,0 +1,7 @@
+.history
+.cache-loader/
+node_modules
+lerna-debug.log
+/modules/public
+/server/run
+/server/logs

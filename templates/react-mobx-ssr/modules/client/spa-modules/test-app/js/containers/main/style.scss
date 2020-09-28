@@ -1,0 +1,31 @@
+@import '../../../../commons/style/utils/bg-url.scss';
+$imgPrefix: '/test-app/assets/images';
+
+.main-container {
+    text-align: center;
+
+    h1 {
+        font-size: 96px;
+    }
+
+    .bg-img {
+        width: 48px;
+        height: 48px;
+        margin: auto;
+        @include bg-url ('#{$imgPrefix}/common_img_loading@2x.png',
+        '#{$imgPrefix}/common_img_loading@3x.png',
+        );
+        animation: animal .5s infinite linear;
+        transform-origin: center center;
+
+        @keyframes animal {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    }
+}

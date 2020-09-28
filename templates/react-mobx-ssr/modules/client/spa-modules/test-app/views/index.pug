@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        title
+        include ../../commons/views/rem.pug
+        style.
+            !{cssStr}
+        script.
+            var __data__ = {
+                storeData: '!{storeStr}'
+            }
+    body
+        div#container
+            !=htmlStr

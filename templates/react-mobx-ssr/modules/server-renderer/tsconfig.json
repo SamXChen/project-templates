@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "declaration": true,
+    "declarationDir": "./dist",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowJs": false,
+    "target": "es6",
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "es7"
+    ],
+    "experimentalDecorators": true
+  },
+  "include": [
+    "./spa-modules/**/*",
+    "./typings/**/*"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./dist"
+  ]
+}

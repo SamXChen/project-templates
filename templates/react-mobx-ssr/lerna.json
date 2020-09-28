@@ -1,0 +1,11 @@
+{
+  "lerna": "3.13.0",
+  "packages": [
+    "modules/client",
+    "modules/server",
+    "modules/server-renderer",
+    "modules/core/*"
+  ],
+  "npmClient": "yarn",
+  "version": "0.0.1"
+}
