@@ -1,0 +1,32 @@
+{
+  "name": "my-cli",
+  "version": "1.0.0",
+  "description": "personal cli",
+  "bin": {
+    "cli": "dist/main.js"
+  },
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc",
+    "test": "jest",
+    "grant": "chmod -R +x dist"
+  },
+  "author": "samxchen",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^6.0.0",
+    "fs-extra": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.1",
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.6.0",
+    "jest": "^26.4.0",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
