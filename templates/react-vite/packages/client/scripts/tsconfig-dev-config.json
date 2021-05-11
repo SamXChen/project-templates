@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "outDir": "../dist"
+    },
+    "include": [
+        "../vite.config.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

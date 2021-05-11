@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{include './tpls/head.html'}}
+    <title>{{title}}</title>
+    <!--preload-styles-->
+  </head>
+  <body>
+    <div id="root"><!--ssr-outlet--></div>
+    <script type="module" src="./src/main.tsx"></script>
+    {{include './tpls/foot.html'}}
+  </body>
+</html>

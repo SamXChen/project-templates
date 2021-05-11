@@ -1,0 +1,27 @@
+{
+  "name": "template-vite-server",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node .",
+    "dev": "cross-env NODE_ENV=development nodemon --inspect ."
+  },
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "chalk": "^4.1.1",
+    "cross-env": "^7.0.3",
+    "fs-extra": "^10.0.0",
+    "koa": "^2.13.1",
+    "koa-mount": "^4.0.0",
+    "koa-router": "^10.0.0",
+    "koa-static": "^5.0.0",
+    "node-fetch": "^2.6.1",
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "vite": "^2.3.0"
+  }
+}

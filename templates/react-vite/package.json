@@ -1,0 +1,15 @@
+{
+  "name": "template-vite",
+  "version": "1.0.0",
+  "author": "samxchen",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+      "dev": "cd ./packages/server && yarn dev",
+      "start:server": "cd ./packages/server && yarn start",
+      "build:client": "cd ./packages/client && yarn build"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
