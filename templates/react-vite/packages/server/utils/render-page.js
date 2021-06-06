@@ -66,7 +66,7 @@ async function renderPage(ctx, pageName = '', data = {}) {
                             return path.join('/', path.relative(path.join(DIR_CONFIG.CLIENT_SRC_DIR, '..'), id))
                         }
                     })
-                    const styleLinks = findStyleLinksFromEntry(ids, vite.moduleGraph)
+                    const styleLinks = findStyleLinksFromEntry([entryPath, ...ids], vite.moduleGraph)
                     stylelinksHtml = transformStyleLinksToHtml(styleLinks)
                 }
             } else {
