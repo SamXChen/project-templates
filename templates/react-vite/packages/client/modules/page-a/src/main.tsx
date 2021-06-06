@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDom from 'react-dom'
 
 import { App } from './App'
+import { createRenderer } from '../../utils/ssr-renderer'
 
 if (!import.meta.env.SSR) {
   ReactDom.hydrate(
@@ -10,11 +11,11 @@ if (!import.meta.env.SSR) {
   )
 }
 
-export async function render() {
-  if (import.meta.env.SSR) {
+export async function render(ctx = {} as any) {
+  return createRenderer(ctx, async () => {
     const ReactDomServer = await import('react-dom/server')
     return ReactDomServer.renderToString(
-        <App />
+      <App />
     )
-  }
+  })
 }

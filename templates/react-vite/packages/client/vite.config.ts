@@ -7,6 +7,7 @@ import legacy from '@vitejs/plugin-legacy'
 import { DIR_CONFIG } from 'common-config'
 
 import foldArtTemplatePlugin from './vite/plugins/plugin-art-template-fold'
+import ssrModuleInjectPlugin from './vite/plugins/plugin-ssr-module-inject'
 import reactRefreshPlugin from './vite/plugins/plugin-react-refresh'
 
 export default defineConfig({
@@ -19,6 +20,7 @@ export default defineConfig({
     legacy(),
     reactRefreshPlugin(),
     foldArtTemplatePlugin(),
+    ssrModuleInjectPlugin(),
   ],
 
   build: {
@@ -33,7 +35,10 @@ export default defineConfig({
 function generateInputs() {
   const inputs = {}
   fs.readdirSync(DIR_CONFIG.CLIENT_SRC_DIR).forEach(name => {
-    inputs[name] = path.join(DIR_CONFIG.CLIENT_SRC_DIR, name, 'index.html')
+    const entryPath = path.join(DIR_CONFIG.CLIENT_SRC_DIR, name, 'index.html')
+    if (fs.existsSync(entryPath)) {
+      inputs[name] = entryPath
+    }
   })
   return inputs
 }

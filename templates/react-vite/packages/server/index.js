@@ -18,7 +18,6 @@ async function start() {
 
   if (NODE_ENV === 'development') {
     const vite = await getViteDevModule()
-    process.vite = vite
     app.use(e2k(vite.middlewares))
   } else {
     if (!CDN_CONFIG.prefix) {

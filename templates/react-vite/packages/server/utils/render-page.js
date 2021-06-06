@@ -44,26 +44,41 @@ async function renderPage(ctx, pageName = '', data = {}) {
         try {
             let render
 
+            let renderedHtml
             let stylelinksHtml
 
             if (NODE_ENV === 'development') {
                 const vite = await getViteDevModule()
                 const entryPath = path.join(DIR_CONFIG.CLIENT_SRC_DIR, `${pageName}`, 'src', entry)
                 render = (await vite.ssrLoadModule(entryPath)).render
-
-                // TODO: need a better performance solution for React
-                const styleLinks = findStyleLinksFromEntry(entryPath, vite.moduleGraph)
-                stylelinksHtml = transformStyleLinksToHtml(styleLinks)
-
+                
+                transaction?.log(`loaded ssr module`)
+                
+                const ctx = {}
+                renderedHtml = await render(ctx)
+                
+                // 开发环境：渲染过程中提取 style link
+                if (ctx.ssrLoadedModuleIds && ctx.ssrLoadedModuleIds.length > 0) {
+                    const ids = ctx.ssrLoadedModuleIds.map(id => {
+                        if (id === entryPath) {
+                            return id
+                        } else {
+                            return path.join('/', path.relative(path.join(DIR_CONFIG.CLIENT_SRC_DIR, '..'), id))
+                        }
+                    })
+                    const styleLinks = findStyleLinksFromEntry(ids, vite.moduleGraph)
+                    stylelinksHtml = transformStyleLinksToHtml(styleLinks)
+                }
             } else {
                 const entryPath = path.join(DIR_CONFIG.CLIENT_DIST_DIR, 'ssr', `${pageName}`, `${entry.replace(/\.tsx?$/, '.js')}`)
                 render = require(entryPath).render
+                renderedHtml = await render()
             }
             
-            content = content.replace(`<!--ssr-outlet-->`, await render())
-
+            if (renderedHtml) {
+                content = content.replace(`<!--ssr-outlet-->`, renderedHtml)
+            }
             if (stylelinksHtml) {
-                // TODO: replace with regex
                 content = content.replace(`<!--preload-styles-->`, `\n${stylelinksHtml}\n`)
             }
 
@@ -81,18 +96,20 @@ function findSsrEntry(pageName) {
     return SSR_MAP[pageName]
 }
 
-function findStyleLinksFromEntry(entryPath, moduleGraph, result) {
-    if (result === undefined) {
-        result = []
-    }
-    const moduleInfo = moduleGraph.urlToModuleMap.get(entryPath)
+function findStyleLinksFromEntry(moduleIdList = [], moduleGraph) {
     
-    if (moduleInfo.url && renderPreloadLink(moduleInfo.url)) {
-        result.push(moduleInfo.url)
-    }
-    const depModuleInfos = Array.from(moduleInfo.importedModules)
-    depModuleInfos.forEach(info => {
-        findStyleLinksFromEntry(info.url, moduleGraph, result)
+    const result = []
+
+    moduleIdList.forEach(moduleId => {
+        const moduleInfo = moduleGraph.urlToModuleMap.get(moduleId)
+        if (moduleInfo.importedModules) {
+            const depModuleInfos = Array.from(moduleInfo.importedModules)
+            depModuleInfos.forEach(info => {
+                if (info.url && renderPreloadLink(info.url)) {
+                    result.push(info.url)
+                }
+            })
+        }
     })
 
     return result
