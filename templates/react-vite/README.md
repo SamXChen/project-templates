@@ -46,6 +46,7 @@
 ```bash
 yarn dev
 ```
+浏览器访问：http://localhost:3002/serve/page-a
 
 ### build production
 
