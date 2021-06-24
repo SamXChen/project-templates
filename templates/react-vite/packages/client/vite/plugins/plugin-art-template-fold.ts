@@ -194,7 +194,7 @@ function htmlNodeVisitor({ magicHtml, parentDir, publicDir }, node) {
     const { src } = getScriptInfo(node)
     const url = src?.value?.content
     const transferedUrl = transferUrl(url, parentDir, publicDir)
-    if (url !== transferedUrl) {
+    if (url && url !== transferedUrl) {
       magicHtml.overwrite(
         src!.value!.loc.start.offset,
         src!.value!.loc.end.offset,
