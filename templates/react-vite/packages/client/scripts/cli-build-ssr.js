@@ -37,7 +37,7 @@ async function run() {
             input: path.join(DIR_CONFIG.CLIENT_SRC_DIR, moduleName, 'src', entryName),
         }
 
-        buildTasks.push(build(baseConfig))
+        buildTasks.push(build({ ...baseConfig, configFile: false }))
     })
 
     try {

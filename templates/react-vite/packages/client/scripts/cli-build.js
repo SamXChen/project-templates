@@ -8,9 +8,6 @@ async function run() {
 
     delete config.server
 
-    // vite will read plugins from vite.config.ts, remove plugins settings here
-    delete config.plugins
-
     if (config.build) {
         delete config.build.emptyOutDir
     }
@@ -19,7 +16,7 @@ async function run() {
         config.base = CDN_CONFIG.prefix
     }
     
-    return build(config)
+    return build({ ...config, configFile: false })
 }
 
 run()

@@ -2,13 +2,13 @@ import path from 'path'
 import fs from 'fs-extra'
 import { defineConfig } from 'vite'
 
-import legacy from '@vitejs/plugin-legacy'
 
 import { DIR_CONFIG } from 'common-config'
 
-import foldArtTemplatePlugin from './vite/plugins/plugin-art-template-fold'
-import ssrModuleInjectPlugin from './vite/plugins/plugin-ssr-module-inject'
-import reactRefreshPlugin from './vite/plugins/plugin-react-refresh'
+import legacyPlugin from '@vitejs/plugin-legacy'
+import reactRefreshPlugin from '@vitejs/plugin-react-refresh'
+import foldArtTemplatePlugin from './plugins/plugin-art-template-fold'
+import ssrModuleInjectPlugin from './plugins/plugin-ssr-module-inject'
 
 export default defineConfig({
 
@@ -17,9 +17,9 @@ export default defineConfig({
   root: DIR_CONFIG.CLIENT_DIR,
 
   plugins: [
-    legacy(),
+    legacyPlugin(),
     reactRefreshPlugin(),
-    foldArtTemplatePlugin(),
+    foldArtTemplatePlugin(DIR_CONFIG.CLIENT_DIR),
     ssrModuleInjectPlugin(),
   ],
 
@@ -29,6 +29,10 @@ export default defineConfig({
     rollupOptions: {
       input: generateInputs(),
     },
+  },
+
+  esbuild: {
+    target: ['es2020', 'node12'],
   },
 })
 

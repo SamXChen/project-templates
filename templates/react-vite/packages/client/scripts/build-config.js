@@ -26,9 +26,10 @@ const reactRefreshExternalPlugin = {
 async function buildConfig() {
 
     await esbuild.build({
-        entryPoints:[path.resolve(__dirname, '../vite.config.ts')],
+        entryPoints:[path.resolve(__dirname, '../vite/vite.config.ts')],
         bundle: true,
         platform: 'node',
+        target: 'es2015',
         outfile: path.resolve(__dirname, '../dist/vite.config.js'),
         plugins: [
             nodeExternalsPlugin(),

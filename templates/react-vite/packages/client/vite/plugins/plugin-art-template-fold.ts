@@ -14,9 +14,7 @@ const assetAttrsConfig: Record<string, string[]> = {
   use: ['xlink:href', 'href']
 }
 
-const PUBLIC_DIR = path.resolve(__dirname, '../../')
-
-export default function() {
+export default function(publicDir: string) {
   return {
     name: 'html-art-template-fold',
     transformIndexHtml: {
@@ -28,12 +26,12 @@ export default function() {
         const transformedHtml = transformHtmlSrc(html, {
           rootDir: fileDir,
           parentDir: fileDir,
-          publicDir: PUBLIC_DIR,
+          publicDir,
         })
 
         const foldedHtml = artTemplate.render(transformedHtml, {}, {
           root: fileDir,
-          include: includeHandler.bind(null, fileDir),
+          include: includeHandler.bind(null, fileDir, publicDir),
           rules: [getArtRule()],
           escape: false,
         })
@@ -45,7 +43,7 @@ export default function() {
 }
 
 
-function includeHandler(rootDir: string, filename, data, blocks, options) {
+function includeHandler(rootDir: string, publicDir: string, filename, data, blocks, options) {
 
   // filename: 当前正在处理的 include 文件相对路径
   // data：用于渲染模板的数据
@@ -64,7 +62,7 @@ function includeHandler(rootDir: string, filename, data, blocks, options) {
   const transformedHtml = transformHtmlSrc(compiledStr, {
     rootDir,
     parentDir: path.dirname(options.filename),
-    publicDir: PUBLIC_DIR,
+    publicDir,
   })
   return transformedHtml
 }

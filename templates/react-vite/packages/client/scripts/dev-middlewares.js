@@ -15,7 +15,7 @@ async function createViteDevModule() {
     }
     config.server.middlewareMode = true
 
-    return await createServer(config)
+    return await createServer({ ...config, configFile: false })
 }
 
 module.exports = {

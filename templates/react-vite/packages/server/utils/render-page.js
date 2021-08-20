@@ -11,35 +11,35 @@ async function renderPage(ctx, pageName = '', data = {}) {
 
     const { transaction } = ctx
 
-    transaction?.log('start render page')
+    transaction && transaction.log('start render page')
 
     let content = ''
     if (NODE_ENV === 'development') {
 
-        transaction?.log('development, use vite transformIndexHtml')
+        transaction && transaction.log('development, use vite transformIndexHtml')
 
         const vite = await getViteDevModule()
         const TARGET_DIR = path.join(DIR_CONFIG.CLIENT_SRC_DIR, `/${pageName}/index.html`)
         content = await fs.readFile(TARGET_DIR, { encoding: 'utf8' })
         content = await vite.transformIndexHtml(`/modules/${pageName}/index.html`, content)
 
-        transaction?.log('get html content')
+        transaction && transaction.log('get html content')
 
     } else {
 
-        transaction?.log('production, use fs read html')
+        transaction && transaction.log('production, use fs read html')
 
         const TARGET_DIR = path.join(DIR_CONFIG.CLIENT_DIST_HTML_DIR, `/${pageName}/index.html`)
         content = await fs.readFile(TARGET_DIR, { encoding: 'utf8' })
 
-        transaction?.log('get html content')
+        transaction && transaction.log('get html content')
     }
 
     const entry = findSsrEntry(pageName) || ''
     const needSSr = entry.length > 0
     if (needSSr) {
 
-        transaction?.log('need ssr')
+        transaction && transaction.log('need ssr')
 
         try {
             let render
@@ -52,7 +52,7 @@ async function renderPage(ctx, pageName = '', data = {}) {
                 const entryPath = path.join(DIR_CONFIG.CLIENT_SRC_DIR, `${pageName}`, 'src', entry)
                 render = (await vite.ssrLoadModule(entryPath)).render
                 
-                transaction?.log(`loaded ssr module`)
+                transaction && transaction.log(`loaded ssr module`)
                 
                 const ctx = {}
                 renderedHtml = await render(ctx)
@@ -83,11 +83,11 @@ async function renderPage(ctx, pageName = '', data = {}) {
             }
 
         } catch (err) {
-            transaction?.error(err)
+            transaction && transaction.error(err)
         }
     }
 
-    transaction?.log('html content ready')
+    transaction && transaction.log('html content ready')
 
     return ctx.body = artTpl.render(content, data)
 }
