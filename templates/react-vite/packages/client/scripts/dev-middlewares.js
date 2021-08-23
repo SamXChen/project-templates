@@ -15,6 +15,17 @@ async function createViteDevModule() {
     }
     config.server.middlewareMode = true
 
+    const esbuildConfig = config.esbuild || {}
+    const esbuildTarget = esbuildConfig.target || []
+
+    config.esbuild = {
+      ...esbuildConfig,
+      target: [
+        ...esbuildTarget,
+        'es2020', 'node12',
+      ],
+    }
+
     return await createServer({ ...config, configFile: false })
 }
 

@@ -30,10 +30,6 @@ export default defineConfig({
       input: generateInputs(),
     },
   },
-
-  esbuild: {
-    target: ['es2020', 'node12'],
-  },
 })
 
 function generateInputs() {
