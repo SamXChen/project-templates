@@ -5,7 +5,6 @@ const mount = require('koa-mount')
 const { SERVER_CONFIG, DIR_CONFIG, CDN_CONFIG } = require('common-config')
 
 const e2k = require('./utils/express-to-koa')
-const { getViteDevModule } = require('./utils/vite-module')
 
 const { rootRouter } = require('./routers/root')
 
@@ -17,7 +16,8 @@ async function start() {
   const app = new Koa()
 
   if (NODE_ENV === 'development') {
-    const vite = await getViteDevModule()
+    const { getViteAssetDevModule } = require('./utils/vite-module')
+    const vite = await getViteAssetDevModule()
     app.use(e2k(vite.middlewares))
   } else {
     if (!CDN_CONFIG.prefix) {

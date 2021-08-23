@@ -3,8 +3,6 @@ const fs = require('fs-extra')
 const artTpl = require('art-template')
 const { DIR_CONFIG, SSR_MAP } = require('common-config')
 
-const { getViteDevModule } = require('./vite-module')
-
 const NODE_ENV = process.env.NODE_ENV
 
 async function renderPage(ctx, pageName = '', data = {}) {
@@ -18,7 +16,8 @@ async function renderPage(ctx, pageName = '', data = {}) {
 
         transaction && transaction.log('development, use vite transformIndexHtml')
 
-        const vite = await getViteDevModule()
+        const { getViteAssetDevModule } = require('./vite-module')
+        const vite = await getViteAssetDevModule()
         const TARGET_DIR = path.join(DIR_CONFIG.CLIENT_SRC_DIR, `/${pageName}/index.html`)
         content = await fs.readFile(TARGET_DIR, { encoding: 'utf8' })
         content = await vite.transformIndexHtml(`/modules/${pageName}/index.html`, content)
@@ -48,7 +47,8 @@ async function renderPage(ctx, pageName = '', data = {}) {
             let stylelinksHtml
 
             if (NODE_ENV === 'development') {
-                const vite = await getViteDevModule()
+              const { getViteSsrDevModule } = require('./vite-module')
+                const vite = await getViteSsrDevModule()
                 const entryPath = path.join(DIR_CONFIG.CLIENT_SRC_DIR, `${pageName}`, 'src', entry)
                 render = (await vite.ssrLoadModule(entryPath)).render
                 
